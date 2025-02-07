@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import SearchBar from "./../../components/SearchBar"; 
 import Pagination from "./../../components/Pagination"; 
+import CategoryFilter from "./../../components/CategoryFilter";
+import GameList from "./../../components/GameList";
 
 interface Game {
   _id: string;
@@ -13,16 +15,11 @@ interface Game {
   platform: string;
 }
 
-const categories = [
-  "MMORPG", "Shooter", "Action RPG", "Battle Royale", "ARPG", "MMOARPG",
-  "MOBA", "Strategy", "Card Game", "Sports", "Fighting", "MMO", "Fantasy", "Social"
-];
-
 export default function DataPage() {
   const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [searchTerm, setSearchTerm] = useState(""); 
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // Multi-select categories
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,15 +48,6 @@ export default function DataPage() {
     fetchData();
   }, []);
 
-  // Toggle category selection (multi-select)
-  const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category) // Remove if selected
-        : [...prev, category] // Add if not selected
-    );
-  };
-
   // Apply search & multiple category filter
   useEffect(() => {
     let filtered = games;
@@ -77,7 +65,7 @@ export default function DataPage() {
     }
 
     setFilteredGames(filtered);
-    setCurrentPage(1); // Reset to first page when filters change
+    setCurrentPage(1);
   }, [searchTerm, selectedCategories, games]);
 
   // Get current page's games
@@ -92,74 +80,27 @@ export default function DataPage() {
           Free-to-Play Games List 🎮
         </h1>
 
-        {/* Search Bar Component */}
+        {/* Search Bar */}
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-        {/* Category Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-3 my-6">
-          {/* Clear Selection Button */}
-          <button
-            onClick={() => setSelectedCategories([])}
-            className={`px-5 py-2 text-sm font-medium rounded-full transition-all shadow-md 
-              ${selectedCategories.length === 0 
-                ? "bg-blue-600 text-white shadow-lg" 
-                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-              }`}
-          >
-            All Categories
-          </button>
-
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => toggleCategory(category)}
-              className={`px-5 py-2 text-sm font-medium rounded-full transition-all shadow-md 
-                ${selectedCategories.includes(category) 
-                  ? "bg-blue-600 text-white shadow-lg" 
-                  : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
+        {/* Category Filter */}
+        <CategoryFilter selectedCategories={selectedCategories} setSelectedCategories={setSelectedCategories} />
 
         {/* Error Message */}
         {error && <p className="text-red-600 text-center mb-4">{error}</p>}
 
-        {/* Loading & Data Display */}
+        {/* Loading & Game List */}
         {loading ? (
           <p className="text-center text-gray-700">Loading games...</p>
-        ) : currentGames.length > 0 ? (
+        ) : (
           <>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {currentGames.map((game) => (
-                <div
-                  key={game._id}
-                  className="bg-white p-5 rounded-lg shadow-lg hover:shadow-xl transition-all"
-                >
-                  <img
-                    src={game.thumbnail}
-                    alt={game.title}
-                    className="w-full h-40 object-cover rounded-lg mb-3"
-                  />
-                  <h3 className="text-lg font-semibold text-gray-900">{game.title}</h3>
-                  <p className="text-gray-700 text-sm mb-2">{game.short_description}</p>
-                  <span className="text-blue-500 text-xs font-semibold">{game.genre}</span>
-                  <p className="text-gray-500 text-xs">Platform: {game.platform}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Pagination Component */}
+            <GameList games={currentGames} />
             <Pagination 
               currentPage={currentPage}
               totalPages={Math.ceil(filteredGames.length / gamesPerPage)}
               onPageChange={setCurrentPage}
             />
           </>
-        ) : (
-          <p className="text-center text-gray-600">No games found.</p>
         )}
       </div>
     </div>
