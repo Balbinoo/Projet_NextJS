@@ -10,7 +10,7 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("/api/fetchData");
+      const response = await fetch("/api/fetchFreeToGame");
       const result = await response.json();
       console.log("Fetched & Stored Data:", result);
       setData(result.data);
