@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import SearchBar from "./../../components/SearchBar"; // Import the new component
 
 interface Game {
   _id: string;
@@ -11,33 +12,45 @@ interface Game {
   platform: string;
 }
 
-export default function datapage() {
+export default function DataPage() {
   const [games, setGames] = useState<Game[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [filteredGames, setFilteredGames] = useState<Game[]>([]);
+  const [searchTerm, setSearchTerm] = useState(""); 
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Function to fetch data from the database
-  const fetchData = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch("/api/gameData"); // Correct API route
-      if (!response.ok) throw new Error("Failed to fetch games.");
-      
-      const result = await response.json();
-      setGames(result); // Store fetched data
-    } catch (err) {
-      console.error("Error fetching data:", err);
-      setError("Failed to load games. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fetch data when the component mounts
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("/api/gameData");
+        if (!response.ok) throw new Error("Failed to fetch games.");
+        
+        const result = await response.json();
+        setGames(result);
+        setFilteredGames(result);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load games. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchData();
-  }, []);
+  }, []); // Runs only once when the component mounts
+
+  useEffect(() => {
+    if (searchTerm.trim() === "") {
+      setFilteredGames(games);
+    } else {
+      setFilteredGames(
+        games.filter((game) =>
+          game.title.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      );
+    }
+  }, [searchTerm, games]);
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 px-6">
@@ -46,16 +59,8 @@ export default function datapage() {
           Free-to-Play Games List 🎮
         </h1>
 
-        {/* Fetch Data Button */}
-        <div className="flex justify-center mb-6">
-          <button
-            onClick={fetchData}
-            disabled={loading}
-            className="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 disabled:opacity-50 transition-all"
-          >
-            {loading ? "Fetching..." : "Fetch Data"}
-          </button>
-        </div>
+        {/* Search Bar Component */}
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
         {/* Error Message */}
         {error && <p className="text-red-600 text-center mb-4">{error}</p>}
@@ -63,9 +68,9 @@ export default function datapage() {
         {/* Loading & Data Display */}
         {loading ? (
           <p className="text-center text-gray-700">Loading games...</p>
-        ) : games.length > 0 ? (
+        ) : filteredGames.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {games.map((game) => (
+            {filteredGames.map((game) => (
               <div
                 key={game._id}
                 className="bg-white p-5 rounded-lg shadow-lg hover:shadow-xl transition-all"
@@ -83,7 +88,7 @@ export default function datapage() {
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-600">No games available.</p>
+          <p className="text-center text-gray-600">No games found.</p>
         )}
       </div>
     </div>
