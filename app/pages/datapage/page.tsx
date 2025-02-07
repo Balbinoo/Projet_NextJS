@@ -13,11 +13,16 @@ interface Game {
   platform: string;
 }
 
+const categories = [
+  "MMORPG", "Shooter", "Action RPG", "Battle Royale", "ARPG", "MMOARPG",
+  "MOBA", "Strategy", "Card Game", "Sports", "Fighting", "MMO", "Fantasy", "Social"
+];
+
 export default function DataPage() {
   const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const [searchTerm, setSearchTerm] = useState(""); 
-  const [selectedCategory, setSelectedCategory] = useState(""); // Category filter
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // Multi-select categories
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +51,16 @@ export default function DataPage() {
     fetchData();
   }, []);
 
-  // Apply search & category filter
+  // Toggle category selection (multi-select)
+  const toggleCategory = (category: string) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category) // Remove if selected
+        : [...prev, category] // Add if not selected
+    );
+  };
+
+  // Apply search & multiple category filter
   useEffect(() => {
     let filtered = games;
 
@@ -56,13 +70,15 @@ export default function DataPage() {
       );
     }
 
-    if (selectedCategory) {
-      filtered = filtered.filter((game) => game.genre === selectedCategory);
+    if (selectedCategories.length > 0) {
+      filtered = filtered.filter((game) =>
+        selectedCategories.includes(game.genre)
+      );
     }
 
     setFilteredGames(filtered);
     setCurrentPage(1); // Reset to first page when filters change
-  }, [searchTerm, selectedCategory, games]);
+  }, [searchTerm, selectedCategories, games]);
 
   // Get current page's games
   const indexOfLastGame = currentPage * gamesPerPage;
@@ -79,18 +95,33 @@ export default function DataPage() {
         {/* Search Bar Component */}
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-        {/* Category Filter Dropdown */}
-        <div className="flex justify-center my-4">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-2 border rounded-lg bg-white shadow-md"
+        {/* Category Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 my-6">
+          {/* Clear Selection Button */}
+          <button
+            onClick={() => setSelectedCategories([])}
+            className={`px-5 py-2 text-sm font-medium rounded-full transition-all shadow-md 
+              ${selectedCategories.length === 0 
+                ? "bg-blue-600 text-white shadow-lg" 
+                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+              }`}
           >
-            <option value="">All Categories</option>
-            <option value="MMORPG">MMORPG</option>
-            <option value="Shooter">Shooter</option>
-            <option value="Action RPG">Action RPG</option>
-          </select>
+            All Categories
+          </button>
+
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => toggleCategory(category)}
+              className={`px-5 py-2 text-sm font-medium rounded-full transition-all shadow-md 
+                ${selectedCategories.includes(category) 
+                  ? "bg-blue-600 text-white shadow-lg" 
+                  : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                }`}
+            >
+              {category}
+            </button>
+          ))}
         </div>
 
         {/* Error Message */}
