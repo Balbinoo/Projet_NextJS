@@ -24,7 +24,7 @@ export default function NavBar() {
           <Link href="/pages/about" className="hover:underline">
             About
           </Link>
-          <Link href="/contact" className="hover:underline">
+          <Link href="/pages/contact" className="hover:underline">
             Contact
           </Link>
         </div>

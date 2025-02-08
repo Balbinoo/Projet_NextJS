@@ -14,8 +14,8 @@ const Footer: React.FC = () => {
         {/* Center Section - Quick Links */}
         <div className="flex space-x-6 mt-4 md:mt-0">
           <a href="/" className="hover:text-blue-400">Home</a>
-          <a href="/about" className="hover:text-blue-400">About</a>
-          <a href="/contact" className="hover:text-blue-400">Contact</a>
+          <a href="/pages/about" className="hover:text-blue-400">About</a>
+          <a href="/pages/contact" className="hover:text-blue-400">Contact</a>
           <a href="/privacy" className="hover:text-blue-400">Privacy Policy</a>
         </div>
 
