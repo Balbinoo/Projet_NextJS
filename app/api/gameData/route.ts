@@ -3,28 +3,41 @@ import connect from "../../../lib/mongodb";
 import Game from "../../../lib/modals/FreeToGame";
 import { Types } from "mongoose";
 
-// GET - Fetch games (all or by title)
+// GET - Fetch games (all, by title, or by ID)
 export const GET = async (request: Request) => {
   try {
     await connect();
-    
+
     const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
     const title = searchParams.get("title");
 
-    if (title) {
-      const game = await Game.findOne({ title });
+    // Fetch by ID
+    if (id) {
+      if (!Types.ObjectId.isValid(id)) {
+        return new NextResponse(JSON.stringify({ message: "Invalid game ID" }), { status: 400 });
+      }
 
+      const game = await Game.findById(id);
       if (!game) {
-        return new NextResponse(
-          JSON.stringify({ message: "No game found for the given title" }),
-          { status: 404 }
-        );
+        return new NextResponse(JSON.stringify({ message: "No game found for the given ID" }), { status: 404 });
       }
 
       return new NextResponse(JSON.stringify({ message: "Game retrieved", data: game }), { status: 200 });
     }
 
-    // If no title is provided, return all games
+    // Fetch by title
+    if (title) {
+      const game = await Game.findOne({ title });
+
+      if (!game) {
+        return new NextResponse(JSON.stringify({ message: "No game found for the given title" }), { status: 404 });
+      }
+
+      return new NextResponse(JSON.stringify({ message: "Game retrieved", data: game }), { status: 200 });
+    }
+
+    // Fetch all games if no ID or title is provided
     const games = await Game.find();
     return new NextResponse(JSON.stringify(games), { status: 200 });
 
