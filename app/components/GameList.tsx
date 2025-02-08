@@ -7,9 +7,7 @@ interface GameListProps {
     _id: string;
     title: string;
     thumbnail: string;
-    short_description: string;
     genre: string;
-    platform: string;
   }[];
 }
 

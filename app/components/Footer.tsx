@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         {/* Left Section - Brand & Copyright */}
         <div className="text-center md:text-left">
           <h2 className="text-lg font-bold text-white">Free-To-Play Games 🎮</h2>
-          <p className="text-sm mt-1">© 2024 All Rights Reserved.</p>
+          <p className="text-sm mt-1">© 2025 All Rights Reserved.</p>
         </div>
 
         {/* Center Section - Quick Links */}
