@@ -20,7 +20,7 @@ const StartPage: React.FC = () => {
       </p>
 
       {/* Custom Button */}
-      <CustomButton text="Explore Games 🎮" href="/pages/datapage" />
+      <CustomButton text="Explore Games 🎮" href="/pages/data" />
     </div>
   );
 };
