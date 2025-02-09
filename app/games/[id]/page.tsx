@@ -105,8 +105,14 @@ export default function GameDetails() {
       await checkIfFavorite(); // Re-check favorites
     } catch (err) {
       console.error("Error toggling favorite:", err);
-      alert(err.message);
-    } finally {
+    
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert("An unexpected error occurred.");
+      }
+    }
+     finally {
       setFavoriteLoading(false);
     }
   };
