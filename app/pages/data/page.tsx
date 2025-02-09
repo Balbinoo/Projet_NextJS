@@ -106,7 +106,6 @@ export default function DataPage() {
           </>
         )}
       </div>
-
       <Footer /> {/* Add Footer here */}
 
     </div>

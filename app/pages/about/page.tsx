@@ -81,6 +81,9 @@ const AboutPage: React.FC = () => {
               <a href="https://www.freetogame.com/api-doc" target="_blank" rel="noopener noreferrer"
                  className="text-blue-500 hover:underline"> Free-to-Play Games API</a>.
             </li>
+            <li>
+              <strong>Deployment:</strong> Deployed on <span className="text-blue-500 font-semibold">Vercel</span>.
+            </li>
           </ul>
         </div>
       </div>

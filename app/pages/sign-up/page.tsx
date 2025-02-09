@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter
 import { auth } from "../../firebase/config"; // Adjust the import path based on your folder structure
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -9,6 +10,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const router = useRouter(); // Initialize useRouter
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +22,10 @@ export default function SignUp() {
       setSuccess(true);
       setEmail("");
       setPassword("");
+
+      setTimeout(() => {
+        router.push("/pages/sign-in"); 
+      }, 1000);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -35,7 +41,11 @@ export default function SignUp() {
         <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">Sign Up</h1>
 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        {success && <p className="text-green-500 text-center mb-4">Account created successfully!</p>}
+        {success && (
+          <p className="text-green-500 text-center mb-4">
+            Account created successfully! Redirecting to Sign In...
+          </p>
+        )}
 
         <form onSubmit={handleSignUp}>
           <div className="mb-4">
@@ -69,8 +79,9 @@ export default function SignUp() {
             Sign Up
           </button>
 
-            <a href="/pages/sign-in" className="text-blue-600 text-center mt-4 block">Already have an account? Sign In</a>
-
+          <a href="/pages/sign-in" className="text-blue-600 text-center mt-4 block">
+            Already have an account? Sign In
+          </a>
         </form>
       </div>
     </div>
