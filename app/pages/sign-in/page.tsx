@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { auth } from "./../../firebase/config"; // Adjust the import path based on your folder structure
+import { auth } from "./../../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
@@ -29,9 +29,10 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">Sign In</h1>
+    <div className="min-h-screen flex items-center justify-center bg-blue-50">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border-t-4 border-blue-500">
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">Welcome Back!</h1>
+        <p className="text-center text-gray-500 mb-4">Log in to access your account</p>
 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
@@ -69,9 +70,9 @@ export default function SignIn() {
         </form>
 
         <p className="text-sm text-gray-600 text-center mt-4">
-          Don&apos;t have an account?{" "}
+          New here?{" "}
           <a href="/pages/sign-up" className="text-blue-500 underline">
-            Sign Up
+            Create an account
           </a>
         </p>
       </div>

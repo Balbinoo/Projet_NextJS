@@ -49,7 +49,7 @@ const StartPage: React.FC = () => {
         {isLoggedIn ? (
           <CustomButton text="Look for Games 🎮" href="/pages/data" />
         ) : (
-          <CustomButton text="Explore Games 🎮" href="/pages/sign-up" />
+          <CustomButton text="Explore Games 🎮" href="/pages/sign-in" />
         )}
       </div>
     </div>
