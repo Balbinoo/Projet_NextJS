@@ -31,6 +31,9 @@ export default function NavBar() {
 
         {/* Navigation Links */}
         <div className="flex items-center space-x-6">
+        <Link href="/pages/favorite" className="hover:underline">
+            Favorites
+          </Link>
           <Link href="/pages/data" className="hover:underline">
             Games List
           </Link>
