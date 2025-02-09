@@ -2,7 +2,7 @@
 
 interface CategoryFilterProps {
   selectedCategories: string[];
-  setSelectedCategories: (categories: string[]) => void;
+  setSelectedCategories: (categories: string[] | ((prev: string[]) => string[])) => void;
 }
 
 const categories = [
@@ -12,10 +12,10 @@ const categories = [
 
 export default function CategoryFilter({ selectedCategories, setSelectedCategories }: CategoryFilterProps) {
   const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) =>
+    setSelectedCategories((prev: string[]) =>
       prev.includes(category)
-        ? prev.filter((c) => c !== category) // Remove if selected
-        : [...prev, category] // Add if not selected
+        ? prev.filter((c) => c !== category) 
+        : [...prev, category]
     );
   };
 
@@ -29,7 +29,6 @@ export default function CategoryFilter({ selectedCategories, setSelectedCategori
       >
         All Categories
       </button>
-
       {categories.map((category) => (
         <button
           key={category}
