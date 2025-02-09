@@ -58,7 +58,12 @@ export default function GameDetails() {
 
       <div className="py-10 px-6 max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6">
-          <Image src={game.thumbnail} alt={game.title} className="w-full h-64 object-cover rounded-md" />
+          <Image 
+            src={game.thumbnail} 
+            alt={game.title} 
+            width={500}
+            height={300}
+            className="w-full h-64 object-cover rounded-md" />
           <h1 className="text-3xl font-bold text-gray-800 mt-4">{game.title}</h1>
           <p className="text-gray-600 mt-2">{game.genre}</p>
           <p className="text-gray-700 mt-4">{game.short_description}</p>
