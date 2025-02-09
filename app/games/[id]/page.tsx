@@ -51,29 +51,29 @@ export default function GameDetails() {
     fetchGameDetails();
   }, [id]);
 
-  // Check if the game is already in the user's favorites
   const checkIfFavorite = async () => {
     if (!id || !auth.currentUser?.uid) return;
 
     try {
-      const userId = auth.currentUser?.uid;
+      const userId = auth.currentUser.uid;
       const response = await fetch(`/api/favorites?userId=${userId}`);
+
       if (!response.ok) throw new Error("Failed to check favorites.");
 
       const data = await response.json();
 
-      // ✅ Check if this specific game is in the favorites list
-      const isGameFavorited = data.data.some((fav: Game) => fav._id === id);
+      // ✅ Ensure `data.data` is an array and contains the gameId
+      const isGameFavorited = data.data.some((fav: { gameId: string }) => fav.gameId === id);
       setIsFavorite(isGameFavorited);
     } catch (err) {
       console.error("Error checking favorites:", err);
     }
   };
 
-  // Call checkIfFavorite when the component mounts or when the game ID changes
+
   useEffect(() => {
     checkIfFavorite();
-  }, [id]);
+  }, [id, auth.currentUser]); 
 
   const handleFavoriteToggle = async () => {
     if (!auth.currentUser?.uid) {
@@ -85,22 +85,27 @@ export default function GameDetails() {
   
     try {
       const userId = auth.currentUser.uid;
-      const endpoint = `/api/favorites`;
-      const method = isFavorite ? "DELETE" : "POST";
+      const endpoint = isFavorite
+        ? `/api/favorites?userId=${userId}&gameId=${id}` // Send as query params
+        : `/api/favorites`;
   
       const response = await fetch(endpoint, {
-        method,
+        method: isFavorite ? "DELETE" : "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, gameId: id }),
+        body: isFavorite ? null : JSON.stringify({ userId, gameId: id }), // Only send body for POST
       });
   
-      if (!response.ok) throw new Error(isFavorite ? "Failed to remove favorite." : "Failed to add favorite.");
+      const responseData = await response.json();
+      console.log("API Response:", responseData);
   
-      // ✅ Toggle favorite state for the current game
-      setIsFavorite(!isFavorite);
+      if (!response.ok) {
+        throw new Error(responseData.message || (isFavorite ? "Failed to remove favorite." : "Failed to add favorite."));
+      }
+  
+      await checkIfFavorite(); // Re-check favorites
     } catch (err) {
       console.error("Error toggling favorite:", err);
-      alert(isFavorite ? "Failed to remove favorite." : "Failed to add favorite.");
+      alert(err.message);
     } finally {
       setFavoriteLoading(false);
     }

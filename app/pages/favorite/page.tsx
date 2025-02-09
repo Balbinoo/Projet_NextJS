@@ -2,9 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { auth } from "../../firebase/config"; // Import Firebase auth
-import SearchBar from "../../components/SearchBar";
 import Pagination from "../../components/Pagination";
-import CategoryFilter from "../../components/CategoryFilter";
 import GameList from "../../components/GameList";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
@@ -16,11 +14,13 @@ interface Game {
   genre: string;
 }
 
+interface Favorite {
+  userId: string;
+  gameId: string;
+}
+
 export default function FavoritesPage() {
   const [favoriteGames, setFavoriteGames] = useState<Game[]>([]);
-  const [filteredGames, setFilteredGames] = useState<Game[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -45,20 +45,19 @@ export default function FavoritesPage() {
         const favoritesResponse = await fetch(`/api/favorites?userId=${userId}`);
         if (!favoritesResponse.ok) throw new Error("Failed to fetch favorites.");
 
-        const favoritesData = await favoritesResponse.json();
-        const favoriteGameIds = favoritesData.data.map((favorite: any) => favorite.gameId);
+        const favoritesData: { data: Favorite[] } = await favoritesResponse.json();
+        const favoriteGameIds = favoritesData.data.map((favorite) => favorite.gameId);
 
         // Fetch details of favorite games
         const gamesResponse = await fetch("/api/gameData");
         if (!gamesResponse.ok) throw new Error("Failed to fetch games.");
 
-        const allGames = await gamesResponse.json();
-        const favoriteGames = allGames.filter((game: Game) =>
+        const allGames: Game[] = await gamesResponse.json();
+        const favoriteGames = allGames.filter((game) =>
           favoriteGameIds.includes(game._id)
         );
 
         setFavoriteGames(favoriteGames);
-        setFilteredGames(favoriteGames);
       } catch (err) {
         console.error("Error fetching favorites:", err);
         setError("Failed to load favorites. Please try again.");
@@ -70,30 +69,10 @@ export default function FavoritesPage() {
     fetchFavorites();
   }, []);
 
-  // Apply search & multiple category filter
-  useEffect(() => {
-    let filtered = favoriteGames;
-
-    if (searchTerm.trim() !== "") {
-      filtered = filtered.filter((game) =>
-        game.title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    if (selectedCategories.length > 0) {
-      filtered = filtered.filter((game) =>
-        selectedCategories.includes(game.genre)
-      );
-    }
-
-    setFilteredGames(filtered);
-    setCurrentPage(1);
-  }, [searchTerm, selectedCategories, favoriteGames]);
-
   // Get current page's games
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+  const currentGames = favoriteGames.slice(indexOfFirstGame, indexOfLastGame);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -113,12 +92,12 @@ export default function FavoritesPage() {
           <p className="text-center text-gray-700">Loading favorites...</p>
         ) : (
           <>
-            {filteredGames.length > 0 ? (
+            {favoriteGames.length > 0 ? (
               <>
                 <GameList games={currentGames} />
                 <Pagination
                   currentPage={currentPage}
-                  totalPages={Math.ceil(filteredGames.length / gamesPerPage)}
+                  totalPages={Math.ceil(favoriteGames.length / gamesPerPage)}
                   onPageChange={setCurrentPage}
                 />
               </>

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import connect from "../../../lib/mongodb";
 import Favorite from "../../../lib/modals/Favorite";
-import { Types } from "mongoose";
 
 // GET - get all favorites for a user
 export const GET = async (request: Request) => {
