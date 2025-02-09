@@ -20,8 +20,12 @@ export default function SignUp() {
       setSuccess(true);
       setEmail("");
       setPassword("");
-    } catch (err: any) {
-      setError(err.message || "Failed to create account");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Failed to sign up");
+      }
     }
   };
 

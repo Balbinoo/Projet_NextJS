@@ -1,5 +1,6 @@
 import React from "react";
-import {FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
+import Link from "next/link";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   return (
@@ -13,10 +14,10 @@ const Footer: React.FC = () => {
 
         {/* Center Section - Quick Links */}
         <div className="flex space-x-6 mt-4 md:mt-0">
-          <a href="/" className="hover:text-blue-400">Home</a>
-          <a href="/pages/about" className="hover:text-blue-400">About</a>
-          <a href="/pages/contact" className="hover:text-blue-400">Contact</a>
-          <a href="/privacy" className="hover:text-blue-400">Privacy Policy</a>
+          <Link href="/" className="hover:text-blue-400">Home</Link>
+          <Link href="/pages/about" className="hover:text-blue-400">About</Link>
+          <Link href="/pages/contact" className="hover:text-blue-400">Contact</Link>
+          <Link href="/privacy" className="hover:text-blue-400">Privacy Policy</Link>
         </div>
 
         {/* Right Section - Social Icons */}

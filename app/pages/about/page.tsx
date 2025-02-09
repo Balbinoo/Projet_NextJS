@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 
@@ -41,7 +42,7 @@ const AboutPage: React.FC = () => {
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Meet the Creator</h2>
             <p className="text-lg text-gray-700">
               Hello, my name is Rodrigo Balbino, and I built this platform from the ground up.  
-              I'm currently a Master's student at École des Mines de Saint-Étienne, France,  
+              I&apos;m currently a Master&apos;s student at École des Mines de Saint-Étienne, France,  
               pursuing a double diploma in Microelectronics and Computer Science.
             </p>
 
@@ -70,8 +71,8 @@ const AboutPage: React.FC = () => {
               <span className="text-blue-500 font-semibold"> MongoDB</span>.
             </li>
             <li>
-              <strong>Authentification:</strong> Secured with <span className="text-blue-500 font-semibold">Firebase </span>  
-               for the sign-up and sign in pages.
+              <strong>Authentication:</strong> Secured with <span className="text-blue-500 font-semibold">Firebase</span>  
+               for the sign-up and sign-in pages.
             </li>
             <li>
               <strong>Database:</strong> Hosted on <span className="text-blue-500 font-semibold">MongoDB Atlas</span>.

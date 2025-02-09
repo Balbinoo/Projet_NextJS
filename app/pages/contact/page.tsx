@@ -13,9 +13,8 @@ const ContactPage: React.FC = () => {
         <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full text-center">
           <h1 className="text-4xl font-bold text-blue-600 mb-4">Contact Us</h1>
           <p className="text-lg text-gray-600 mb-6">
-            Have a question or feedback? Reach out to us, and we'll get back to you as soon as possible.
+            Have a question or feedback? Reach out to us, and we&apos;ll get back to you as soon as possible.
           </p>
-
           {/* Contact Form */}
           <form className="flex flex-col space-y-4">
             <input

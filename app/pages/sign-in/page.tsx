@@ -19,8 +19,12 @@ export default function SignIn() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/pages/data");
-    } catch (err: any) {
-      setError(err.message || "Failed to sign in");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Failed to sign in");
+      }
     }
   };
 
@@ -65,7 +69,7 @@ export default function SignIn() {
         </form>
 
         <p className="text-sm text-gray-600 text-center mt-4">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <a href="/pages/sign-up" className="text-blue-500 underline">
             Sign Up
           </a>
