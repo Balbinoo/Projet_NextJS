@@ -13,7 +13,7 @@ export default function NavBar() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      router.push("/"); // Redirect to home page after sign-out
+      router.push("/");
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -31,9 +31,6 @@ export default function NavBar() {
 
         {/* Navigation Links */}
         <div className="flex items-center space-x-6">
-          <Link href="/" className="hover:underline">
-            Home
-          </Link>
           <Link href="/pages/data" className="hover:underline">
             Games List
           </Link>
