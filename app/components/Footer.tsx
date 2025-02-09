@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
           <Link href="/" className="hover:text-blue-400">Home</Link>
           <Link href="/pages/about" className="hover:text-blue-400">About</Link>
           <Link href="/pages/contact" className="hover:text-blue-400">Contact</Link>
-          <Link href="/privacy" className="hover:text-blue-400">Privacy Policy</Link>
+          <Link href="/pages/policy" className="hover:text-blue-400">Privacy Policy</Link>
         </div>
 
         {/* Right Section - Social Icons */}
