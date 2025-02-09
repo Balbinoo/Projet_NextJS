@@ -1,8 +1,24 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { auth } from "./../firebase/config"; 
+import React from "react";
+import { signOut } from "firebase/auth";
 
 export default function NavBar() {
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      router.push("/"); // Redirect to home page after sign-out
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   return (
     <nav className="bg-blue-600 text-white py-4 shadow-md">
       <div className="max-w-6xl mx-auto flex justify-between items-center px-6">
@@ -14,7 +30,7 @@ export default function NavBar() {
         </Link>
 
         {/* Navigation Links */}
-        <div className="space-x-6">
+        <div className="flex items-center space-x-6">
           <Link href="/" className="hover:underline">
             Home
           </Link>
@@ -27,6 +43,17 @@ export default function NavBar() {
           <Link href="/pages/contact" className="hover:underline">
             Contact
           </Link>
+          
+          {/* Sign Out Button */}
+          <button onClick={handleSignOut} className="hover:opacity-80 transition-opacity">
+            <Image
+              src="/images/sing_out_icon.png"
+              alt="Sign Out"
+              width={24}
+              height={24}
+              className="rounded-lg shadow-md"
+            />
+          </button>
         </div>
       </div>
     </nav>

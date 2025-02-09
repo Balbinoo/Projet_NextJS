@@ -53,17 +53,6 @@ const AboutPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Team Image - Now spans full width */}
-        <div className="relative w-full h-96 mt-8">
-          <Image
-            src="/images/plan_office.jpg"
-            alt="Happy team collaboration"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-lg shadow-md"
-          />
-        </div>
-
         {/* Tech Stack Section */}
         <div className="bg-white shadow-lg rounded-lg p-6 mt-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">Our Tech Stack</h2>
@@ -79,6 +68,10 @@ const AboutPage: React.FC = () => {
             <li>
               <strong>Backend:</strong> Developed using <span className="text-blue-500 font-semibold">Node.js</span> & 
               <span className="text-blue-500 font-semibold"> MongoDB</span>.
+            </li>
+            <li>
+              <strong>Authentification:</strong> Secured with <span className="text-blue-500 font-semibold">Firebase </span>  
+               for the sign-up and sign in pages.
             </li>
             <li>
               <strong>Database:</strong> Hosted on <span className="text-blue-500 font-semibold">MongoDB Atlas</span>.

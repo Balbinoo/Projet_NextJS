@@ -1,8 +1,26 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import CustomButton from "./components/customButton"; // Importing the button
 import Image from "next/image";
+import { auth } from "./firebase/config"; // Adjust the import path for your Firebase config
+import { onAuthStateChanged } from "firebase/auth";
 
 const StartPage: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check authentication state
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true); // User is logged in
+      } else {
+        setIsLoggedIn(false); // User is not logged in
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center text-white">
       {/* Background Image */}
@@ -27,8 +45,12 @@ const StartPage: React.FC = () => {
           Discover an extensive list of the best free-to-play games!
         </p>
 
-        {/* Custom Button */}
-        <CustomButton text="Explore Games 🎮" href="/pages/data" />
+        {/* Conditional Button */}
+        {isLoggedIn ? (
+          <CustomButton text="Look for Games 🎮" href="/pages/data" />
+        ) : (
+          <CustomButton text="Explore Games 🎮" href="/pages/sign-up" />
+        )}
       </div>
     </div>
   );
