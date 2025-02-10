@@ -65,4 +65,4 @@ Open http://localhost:3000 in your browser to view the project.
 
 ### Website Image
 
-![alt text](/public/images/websiteImage.png)
+![alt text](/public/images/web_site.png)
