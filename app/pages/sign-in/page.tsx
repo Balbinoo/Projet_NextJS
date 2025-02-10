@@ -31,7 +31,7 @@ export default function SignIn() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md border-t-4 border-blue-500">
-        <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">Welcome Back!</h1>
+        <h1 className="text-3xl font-bold text-gray-800 text-center mb-6">Welcome!</h1>
         <p className="text-center text-gray-500 mb-4">Log in to access your account</p>
 
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}

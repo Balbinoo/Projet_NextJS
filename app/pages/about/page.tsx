@@ -19,7 +19,7 @@ const AboutPage: React.FC = () => {
         <div className="bg-white shadow-lg rounded-lg p-6 text-center mb-8">
           <p className="text-lg">
             Welcome to our platform! We are passionate about free-to-play games 
-            and aim to provide an easy way to discover and explore new titles.
+            and strive to make discovering and exploring new titles easier than ever.
           </p>
         </div>
 
@@ -40,15 +40,15 @@ const AboutPage: React.FC = () => {
           <div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Meet the Creator</h2>
             <p className="text-lg text-gray-700">
-              Hello, my name is Rodrigo Balbino, and I built this platform from the ground up.  
-              I&apos;m currently a Master&apos;s student at École des Mines de Saint-Étienne, France,  
-              pursuing a double diploma in Microelectronics and Computer Science.
+              Hi, I&apos;m Rodrigo Balbino! I built this platform from the ground up.  
+              I am currently pursuing a Master&apos;s degree at École des Mines de Saint-Étienne in France,  
+              specializing in Microelectronics and Computer Science as part of a double-degree program.
             </p>
 
             <p className="text-lg text-gray-700 mt-4">
-              This webpage was created as a personal project to enhance my web development skills, 
-              utilizing technologies like Next.js, TypeScript, Tailwind CSS, and MongoDB, 
-              all widely used in professional environments.
+              This project is a personal initiative to refine my web development skills. 
+              It incorporates modern technologies like Next.js, TypeScript, Tailwind CSS, and MongoDB, 
+              all of which are widely used in professional environments.
             </p>
           </div>
         </div>
@@ -71,18 +71,23 @@ const AboutPage: React.FC = () => {
             </li>
             <li>
               <strong>Authentication:</strong> Secured with <span className="text-blue-500 font-semibold">Firebase</span>  
-               for the sign-up and sign-in pages.
+               for user sign-up and sign-in.
             </li>
             <li>
               <strong>Database:</strong> Hosted on <span className="text-blue-500 font-semibold">MongoDB Atlas</span>.
             </li>
             <li>
-              <strong>Game Data Source:</strong> Using the 
+              <strong>Game Data Source:</strong> Uses the  
               <a href="https://www.freetogame.com/api-doc" target="_blank" rel="noopener noreferrer"
-                 className="text-blue-500 hover:underline"> Free-to-Play Games API</a>.
+                 className="text-blue-500 hover:underline"> Free-to-Play Games API</a>  
+              to provide game information.
             </li>
             <li>
-              <strong>Deployment:</strong> Deployed on <span className="text-blue-500 font-semibold">Vercel</span>.
+              <strong>Deployment:</strong> Hosted on <span className="text-blue-500 font-semibold">Vercel</span>.
+            </li>
+            <li>
+              <strong>Email Service:</strong> Uses <span className="text-blue-500 font-semibold">EmailJS</span>  
+              to enable direct communication via the website.
             </li>
           </ul>
         </div>
