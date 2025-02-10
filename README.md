@@ -2,10 +2,6 @@
 
 ## About the Project
 
-Hello, my name is Rodrigo Balbino, I'm currently a Master's student at École des Mines de Saint-Étienne, France, pursuing a double diploma in Microelectronics and Computer Science.
-
-## Purpose
-
 This project provides a seamless platform where users can discover an extensive list of the best free-to-play games. By leveraging modern web technologies, the platform ensures an intuitive and engaging user experience.
 
 ## Live Demo
@@ -66,3 +62,7 @@ npm run dev
 ```
 
 Open http://localhost:3000 in your browser to view the project.
+
+### Website Image
+
+![alt text](/public/images/websiteImage.png)
