@@ -10,9 +10,9 @@ const GameSchema = new Schema(
     platform: { type: String, required: true },
     publisher: { type: String, required: true },
     developer: { type: String, required: true },
-    release_date: { type: String, required: true }, // Keeping as string to match API
+    release_date: { type: String, required: true }, 
     freetogame_profile_url: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }, // Auto-generated timestamp
+    createdAt: { type: Date, default: Date.now }, 
   },
   { timestamps: true }
 );

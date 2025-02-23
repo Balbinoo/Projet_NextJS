@@ -26,10 +26,10 @@ const ContactPage: React.FC = () => {
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
-          to_name: "Support Team", // Change this if needed
-          from_name: formData.name,  // Matches {{from_name}} in your template
-          from_email: formData.email, // Matches {{from_email}} (if used in your template)
-          message: formData.message,  // Matches {{message}} in your template
+          to_name: "Support Team",
+          from_name: formData.name,  
+          from_email: formData.email, 
+          message: formData.message, 
         },
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
